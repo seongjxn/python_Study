@@ -28,14 +28,17 @@ blog_link= 'https://blog.naver.com/eric267175'
 
 def naverLogin():
     driver.get("https://nid.naver.com/nidlogin.login?mode=form&url=" + blog_link)
+    time.sleep(5)
 
     id = driver.find_element(By.CSS_SELECTOR, '#id') #아이디 입력창
+    time.sleep(0.1)
     pyperclip.copy(naver_id)
     time.sleep(0.1)
     id.send_keys(Keys.COMMAND, 'v')
     time.sleep(0.5)
 
     pw = driver.find_element(By.CSS_SELECTOR, '#pw') #비밀번호 입력창
+    time.sleep(0.1)
     pyperclip.copy(naver_pw)
     time.sleep(0.1)
     pw.send_keys(Keys.COMMAND, 'v')
@@ -43,6 +46,7 @@ def naverLogin():
 
     driver.find_element(By.CSS_SELECTOR, '.btn_login').click()          # 로그인 버튼 클릭
     driver.find_element(By.XPATH, '//*[@id="new.dontsave"]').click()    # 자주 사용하는 기기 등록안함
+    time.sleep(1)
 
 
 def blogWrite():
@@ -50,13 +54,24 @@ def blogWrite():
     driver.switch_to.frame("mainFrame")
 
     driver.find_element(By.XPATH, '//*[@id="post-admin"]/a[1]').click()
-    time.sleep(5)
+    time.sleep(10)
+
+    #driver.find_element(By.XPATH, '//span[contains(text(), "취소")]').click()
+    driver.find_element(By.CLASS_NAME, 'se-popup-button-cancel').click()
+    time.sleep(1)
 
     driver.find_element(By.XPATH, '//span[contains(text(), "제목")]').click()
+    time.sleep(0.5)
     action.send_keys("Selenium 자동화 테스트").perform()
+    time.sleep(0.5)
 
     
-
+    driver.find_element(By.XPATH, '//span[contains(text(), "파일")]').click()
+    time.sleep(0.5)
+    # driver.find_element(By.XPATH, '//*[@id="SE-956a1fc5-2fe7-4153-b140-90828d5da725"]/div[1]/div/header/div[1]/ul/li[9]/button').click()
+    
+    file = driver.find_element(By.XPATH, '//span[contains(text(), "내 컴퓨터")]')
+    file.send_keys('/Users/seongjxn/Documents/git/python_Study/Crawling/000660.csv')
 
 
 
